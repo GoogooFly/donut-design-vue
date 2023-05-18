@@ -1,6 +1,8 @@
-import {createApp} from 'vue'
-import App from './App.vue'
-import 'virtual:windi.css'
+import {createApp} from 'vue';
+import App from './App.vue';
+import 'virtual:windi.css';
+import 'vfonts/Lato.css';
+import 'vfonts/FiraCode.css';
 import {setupRouter} from './router';
 import {setupStore} from './store';
 import {setupGlobDirectives} from './directives';

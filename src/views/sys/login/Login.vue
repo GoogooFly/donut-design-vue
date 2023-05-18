@@ -10,13 +10,15 @@
       </NSpace>
     </div>
 
-    <div class="p-5 w-auto flex-1 basis-auto flex items-center justify-center">
+    <div class="p-5 w-auto flex-1 basis-auto flex items-center justify-center transition-w transition-h">
       <div class="rounded-2xl flex overflow-hidden shadow-sm <sm:w-full">
-        <div class="w-500px <lg:hidden">
+        <div class="w-550px <lg:hidden">
           <img class="w-full h-full object-cover" src="../../../assets/images/login_index_left.png">
         </div>
-        <div class="w-500px h-500px p-40px bg-white <sm:(w-full p-20px)">
+        <div class="w-500px min-h-550px p-40px bg-white <sm:(w-full p-20px)">
           <LoginForm/>
+          <RegisterForm />
+          <ForgetPasswordForm />
         </div>
       </div>
     </div>
@@ -26,7 +28,10 @@
 <script setup lang="ts">
 import { NSpace } from 'naive-ui';
 import {AppDarkModeToggle, AppLogo, AppLocalePicker} from '/@/components/Application';
-import LoginForm from "/@/views/sys/login/LoginForm.vue";</script>
+import LoginForm from "/@/views/sys/login/LoginForm.vue";
+import RegisterForm from "/@/views/sys/login/RegisterForm.vue";
+import ForgetPasswordForm from "/@/views/sys/login/ForgetPasswordForm.vue";
+</script>
 
 <style scoped lang="less">
 .login-wrap {

@@ -1,6 +1,6 @@
 <template>
-  <LoginFormTitle/>
-  <NForm :show-label="false">
+  <LoginFormTitle v-show="getShow"/>
+  <NForm v-show="getShow" :show-label="false">
     <NFormItem class="enter-x">
       <NInput size="large" placeholder="账号" clearable>
         <template #prefix>
@@ -24,7 +24,7 @@
       <NCol :span="12">
         <NFormItem>
           <div class="w-full flex items-center justify-end">
-            <NButton size="small" type="primary" text>忘记密码？</NButton>
+            <NButton size="small" type="primary" text @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">忘记密码？</NButton>
           </div>
         </NFormItem>
       </NCol>
@@ -34,13 +34,13 @@
     </NFormItem>
     <NRow :gutter="[12, 0]" class="enter-x">
       <NCol :span="8">
-        <NButton size="small" block>手机登录</NButton>
+        <NButton size="small" @click="setLoginState(LoginStateEnum.MOBILE)" block>手机登录</NButton>
       </NCol>
       <NCol :span="8">
-        <NButton size="small" block>二维码登录</NButton>
+        <NButton size="small"  @click="setLoginState(LoginStateEnum.QR_CODE)" block>二维码登录</NButton>
       </NCol>
       <NCol :span="8">
-        <NButton size="small" block>注册</NButton>
+        <NButton size="small"  @click="setLoginState(LoginStateEnum.REGISTER)" block>注册</NButton>
       </NCol>
     </NRow>
     <NDivider class="text-[#00000073] text-12px enter-x">其它登录方式</NDivider>
@@ -71,6 +71,12 @@
 </template>
 
 <script setup lang="ts">
+import {computed, unref} from 'vue';
 import LoginFormTitle from "/@/views/sys/login/LoginFormTitle.vue";
 import {NButton, NCheckbox, NCol, NDivider, NForm, NFormItem, NInput, NRow, NSpace} from 'naive-ui';
-import {Bytedance, Github, Gitlab, Lock, Tiktok, User} from '@icon-park/vue-next';</script>
+import {Bytedance, Github, Gitlab, Lock, Tiktok, User} from '@icon-park/vue-next';
+import {LoginStateEnum, useLoginState} from '/@/views/sys/login/useLogin';
+
+const {getLoginState, setLoginState} = useLoginState();
+const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
+</script>
