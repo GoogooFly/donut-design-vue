@@ -1,6 +1,6 @@
 <template>
   <NConfigProvider
-      :theme="theme"
+      :theme="getTheme"
       :theme-overrides="getThemeOverrides"
       :locale="zhCN"
       :date-locale="dateZhCN"
@@ -18,14 +18,22 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, unref} from 'vue';
+import {computed, unref} from 'vue';
 import type {GlobalTheme} from 'naive-ui';
-import {dateZhCN, NConfigProvider, NDialogProvider, NMessageProvider, NNotificationProvider, zhCN, NLoadingBarProvider} from 'naive-ui';
+import {dateZhCN, NConfigProvider, NDialogProvider, NMessageProvider, NNotificationProvider, zhCN, NLoadingBarProvider, darkTheme, lightTheme} from 'naive-ui';
 import {darkThemeOverrides, lightThemeOverrides} from '/@/design';
+import { useAppStore }  from '/@/store/modules/app';
+import { ThemeEnum } from '/@/enums/appEnum';
+import { storeToRefs } from 'pinia';
 
-let theme = ref<GlobalTheme | null>(null);
+const { getAppTheme } = storeToRefs(useAppStore());
+
+const getTheme = computed<GlobalTheme>(() => {
+  if (unref(getAppTheme) === ThemeEnum.LIGHT) return lightTheme;
+  else return darkTheme;
+})
 const getThemeOverrides = computed(() => {
-  if (unref(theme) === null) return lightThemeOverrides;
+  if (unref(getAppTheme) === ThemeEnum.LIGHT) return lightThemeOverrides;
   else return darkThemeOverrides;
 })
 </script>

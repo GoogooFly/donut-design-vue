@@ -42,7 +42,7 @@
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
     "vite-plugin-html": "^3.2.0",
-    "vite-plugin-mock": "^3.0.0",
+    "vite-plugin-mock": "2.9.6",
     "vite-plugin-style-import": "^2.0.0",
     "vite-plugin-theme": "^0.8.6",
     "vite-plugin-windicss": "^1.9.0",

@@ -2,23 +2,23 @@
   <LoginFormTitle v-show="getShow"/>
   <NForm v-show="getShow" :show-label="false">
     <NFormItem class="enter-x">
-      <NInput size="large" placeholder="账号" clearable>
+      <NInput size="large" placeholder="账号" clearable v-model:value="formState.username">
         <template #prefix>
-          <User class="flex items-center justify-center" theme="outline" size="18" fill="#c2c2c2"/>
+          <NIcon :component="User" :size="18" color="#c2c2c2" theme="outline" />
         </template>
       </NInput>
     </NFormItem>
     <NFormItem class="enter-x">
-      <NInput size="large" type="password" placeholder="密码" clearable show-password-on="mousedown">
+      <NInput size="large" type="password" placeholder="密码" clearable show-password-on="mousedown" v-model:value="formState.password">
         <template #prefix>
-          <Lock class="flex items-center justify-center" theme="outline" size="18" fill="#c2c2c2"/>
+          <NIcon :component="Lock" :size="18" color="#c2c2c2" theme="outline" />
         </template>
       </NInput>
     </NFormItem>
     <NRow class="enter-x">
       <NCol :span="12">
         <NFormItem>
-          <NCheckbox label="记住我"/>
+          <NCheckbox label="记住我" v-model:checked="formState.remember"/>
         </NFormItem>
       </NCol>
       <NCol :span="12">
@@ -30,7 +30,7 @@
       </NCol>
     </NRow>
     <NFormItem class="enter-x">
-      <NButton size="large" type="primary" block>登录</NButton>
+      <NButton size="large" :loading="loading" type="primary" block @click="onSubmit">登录</NButton>
     </NFormItem>
     <NRow :gutter="[12, 0]" class="enter-x">
       <NCol :span="8">
@@ -71,12 +71,31 @@
 </template>
 
 <script setup lang="ts">
-import {computed, unref} from 'vue';
+import {computed, unref, reactive, ref} from 'vue';
 import LoginFormTitle from "/@/views/sys/login/LoginFormTitle.vue";
-import {NButton, NCheckbox, NCol, NDivider, NForm, NFormItem, NInput, NRow, NSpace} from 'naive-ui';
+import {NButton, NCheckbox, NCol, NDivider, NForm, NFormItem, NInput, NRow, NSpace, NIcon} from 'naive-ui';
 import {Bytedance, Github, Gitlab, Lock, Tiktok, User} from '@icon-park/vue-next';
 import {LoginStateEnum, useLoginState} from '/@/views/sys/login/useLogin';
+import axios from 'axios';
 
 const {getLoginState, setLoginState} = useLoginState();
 const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
+const loading = ref(false);
+
+const formState = reactive({
+  username: "admin",
+  password: "123456",
+  remember: true,
+})
+
+async function onSubmit(){
+  try {
+    loading.value = true;
+    const res = await axios.post('/api/login', {username: 'admin', password: 123456});
+  }catch(err: any){
+
+  }finally {
+    loading.value = false;
+  }
+}
 </script>

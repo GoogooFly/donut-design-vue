@@ -1,7 +1,7 @@
 <template>
   <NPopselect :options="options" trigger="click">
-    <div class="cursor-pointer flex items-center justify-center">
-      <Translate theme="outline" size="24" fill="#333"/>
+    <div class="cursor-pointer flex items-center justify-center text-[#333] dark:text-[#f6f6f6]">
+      <Translate theme="outline" size="24"/>
     </div>
   </NPopselect>
 </template>

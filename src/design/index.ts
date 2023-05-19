@@ -1,15 +1,13 @@
-import { GlobalThemeOverrides } from 'naive-ui';
+import {GlobalThemeOverrides} from 'naive-ui';
 
-const lightThemeOverrides : GlobalThemeOverrides = {
-    common: {
-
-    }
+const lightThemeOverrides: GlobalThemeOverrides = {
+    common: {},
+    Button: {}
 }
 
-const darkThemeOverrides : GlobalThemeOverrides = {
-    common: {
-
-    }
+const darkThemeOverrides: GlobalThemeOverrides = {
+    common: {},
+    Button: {}
 }
 
 export {
