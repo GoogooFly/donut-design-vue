@@ -1,5 +1,5 @@
 <template>
-  <NLayoutSider :inverted="true" :width="230">
+  <NLayoutSider bordered :inverted="false" show-trigger :width="230">
     <AppLogo :size="18"/>
     <LayoutMenu/>
   </NLayoutSider>

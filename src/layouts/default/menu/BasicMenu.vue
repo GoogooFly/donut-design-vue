@@ -1,7 +1,11 @@
 <template>
-  <NMenu :indent="12" v-model:value="activeKey" :options="menuOptions" :inverted="true">
-
-  </NMenu>
+  <NMenu
+      :indent="12"
+      v-model:value="activeKey"
+      :options="menuOptions"
+      :inverted="false"
+      :collapsed-icon-size="22"
+  />
 </template>
 
 <script setup lang="ts">
@@ -9,9 +13,9 @@ import type {Component} from 'vue'
 import {h, ref} from 'vue';
 import type {MenuOption} from 'naive-ui'
 import {NIcon, NMenu} from 'naive-ui';
-import {Analysis, DashboardOne, User, Workbench, EditName, Classroom, Me} from '@icon-park/vue-next';
+import {Analysis, Classroom, DashboardOne, EditName, Me, User, Workbench, SettingConfig} from '@icon-park/vue-next';
 
-const activeKey = ref<string | null>('0');
+const activeKey = ref<string | null>('0-0');
 
 function renderIcon(icon: Component) {
   return () => h(NIcon, null, {default: () => h(icon)})
@@ -23,8 +27,9 @@ const menuOptions: MenuOption[] = [
     label: '仪表盘',
     icon: renderIcon(DashboardOne),
     children: [
-      {key: '0-0', label: "工作台", icon: renderIcon(Workbench)},
-      {key: '0-1', label: "分析页", icon: renderIcon(Analysis)},
+      {key: '0-0', label: "主控台", icon: renderIcon(SettingConfig)},
+      {key: '0-1', label: "工作台", icon: renderIcon(Workbench)},
+      {key: '0-2', label: "分析页", icon: renderIcon(Analysis)},
     ]
   },
   {

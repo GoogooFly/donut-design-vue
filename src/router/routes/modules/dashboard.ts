@@ -6,8 +6,16 @@ export const Dashboard: RouteRecordRaw[] = [
         path: "/dashboard",
         name: "Dashboard",
         component: LAYOUT,
-        redirect: "/dashboard/analysis",
+        redirect: "/dashboard/console",
         children: [
+            {
+                path: "console",
+                name: "Console",
+                component: () => import("/@/views/dashboard/console/index.vue"),
+                meta:{
+
+                }
+            },
             {
                 path: "analysis",
                 name: "Analysis",

@@ -19,7 +19,14 @@ export const useUserStore = defineStore({
         userInfo: null,
         lastUpdateTime: "",
     }),
-    actions: {},
+    actions: {
+        login(){
+
+        },
+        logout(){
+
+        }
+    },
     getters: {}
 })
 
