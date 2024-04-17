@@ -3,49 +3,61 @@
       :indent="12"
       v-model:value="activeKey"
       :options="menuOptions"
+      :expanded-keys="getOpenKeys"
       :inverted="false"
       :collapsed-icon-size="22"
+      @update:value="clickMenuItem"
+      @update:expanded-keys="menuExpanded"
   />
 </template>
 
 <script setup lang="ts">
 import type {Component} from 'vue'
-import {h, ref} from 'vue';
+import {h, ref, watchEffect} from 'vue';
 import type {MenuOption} from 'naive-ui'
 import {NIcon, NMenu} from 'naive-ui';
-import {Analysis, Classroom, DashboardOne, EditName, Me, User, Workbench, SettingConfig} from '@icon-park/vue-next';
+import type {RouteRecordRaw} from 'vue-router';
+import {useRouter, useRoute} from 'vue-router';
 
-const activeKey = ref<string | null>('0-0');
+const router = useRouter();
+const route = useRoute();
+
+const getOpenKeys = route.matched && route.matched.length ? route.matched.map((item) => item.name) : [];
+const activeKey = ref<string | null>(route.name as string);
 
 function renderIcon(icon: Component) {
   return () => h(NIcon, null, {default: () => h(icon)})
 }
 
-const menuOptions: MenuOption[] = [
-  {
-    key: '0',
-    label: '仪表盘',
-    icon: renderIcon(DashboardOne),
-    children: [
-      {key: '0-0', label: "主控台", icon: renderIcon(SettingConfig)},
-      {key: '0-1', label: "工作台", icon: renderIcon(Workbench)},
-      {key: '0-2', label: "分析页", icon: renderIcon(Analysis)},
-    ]
-  },
-  {
-    label: '个人中心',
-    key: '1',
-    icon: renderIcon(User),
-    children: [
-      {key: '1-0', label: "用户信息", icon: renderIcon(Classroom)},
-      {key: '1-1', label: "用户设置", icon: renderIcon(EditName)},
-    ]
-  },
-  {
-    label: '关于',
-    key: '2',
-    icon: renderIcon(Me),
+const menuOptions: MenuOption[] = [];
+
+function getRoutes(routes: readonly RouteRecordRaw[]): MenuOption[] {
+  return routes.map((item): MenuOption => {
+    return {
+      label: item.meta?.title,
+      key: item.name as string,
+      icon: renderIcon(item.meta?.icon as Component),
+      show: !item.meta?.hidden,
+      children: item.children ? getRoutes(item.children) : undefined
+    }
+  })
+}
+
+watchEffect(() => {
+  let route = getRoutes(router.options.routes);
+  Object.assign(menuOptions, route);
+})
+
+function clickMenuItem(key: string) {
+  if (/http(s)?:/.test(key)) {
+    window.open(key);
+  } else {
+    router.push({name: key});
   }
-]
+}
+
+function menuExpanded(keys: string[]) {
+  console.log(keys)
+}
 
 </script>
