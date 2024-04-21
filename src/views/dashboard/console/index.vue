@@ -1,12 +1,14 @@
 <template>
   <NFlex vertical>
-    <QueryForm ref="QueryFormRef" @submit="onQueryFormSubmit"/>
+    <QueryForm ref="QueryFormRef" @submit="onQueryFormSubmit" @restForm="onQueryFormRestForm"/>
     <BasicTable :loading="isLoading"
                 :columns="columns"
                 v-model:tableData="tableData"
                 :pagination="pagination"
                 @update:page="onUpdatePage"
-                @update:page-size="onUpdatePageSize" border stripe>
+                @update:page-size="onUpdatePageSize"
+                @refresh="onRefresh"
+                border stripe>
       <template #buttons>
         <NButton type="primary" @click="onAddEmployee">
           <template #icon>
@@ -25,6 +27,12 @@
       <template #sex="{ row }">
         <NTag v-if="row.sex == 1" :color="{ color: '#ecf5ff', textColor: '#409eff', borderColor: '#d9ecff' }">男</NTag>
         <NTag v-else :color="{ color: '#fef0f0', textColor: '#f56c6c', borderColor: '#fde2e2' }">女</NTag>
+      </template>
+      <template #updateTime="{ row }">
+        {{ dayjs(row.updateTime).format('YYYY-MM-DD HH:mm:ss') }}
+      </template>
+      <template #createTime="{ row }">
+        {{ dayjs(row.createTime).format('YYYY-MM-DD HH:mm:ss') }}
       </template>
       <template #action="{ row }">
         <NFlex justify="center">
@@ -71,6 +79,7 @@ import {NFlex, NButton, NTag, NPopconfirm, NDropdown} from 'naive-ui';
 import {Plus, Edit, Delete, MoreFour} from '@icon-park/vue-next';
 import {BasicTable} from '/@/components/Table';
 import {reactive, ref, onMounted} from 'vue';
+import dayjs from 'dayjs';
 import {
   employeePageApi,
   employeeAddApi,
@@ -91,6 +100,18 @@ let pagination = reactive({
   pageSize: 10,
   total: 100,
   pageSizes: [10, 20, 30, 40],
+});
+let formData = reactive({
+  name: null, // 姓名
+  username: null, // 账号
+  phone: null, // 手机号
+  idNumber: null, // 身份证
+  sex: null, // 性别
+  status: null, // 状态 0:禁用 1:启用
+  updateUser: null, // 修改人
+  updateTime: null, // 修改时间
+  createUser: null, // 创建人
+  createTime: null, // 创建时间
 });
 
 let isLoading = ref(false);
@@ -117,6 +138,22 @@ function onEdit(options: any) {
     title: "编辑员工",
     options,
   });
+}
+
+async function onRefresh() {
+  Object.assign(formData, {
+    name: null, // 姓名
+    username: null, // 账号
+    phone: null, // 手机号
+    idNumber: null, // 身份证
+    sex: null, // 性别
+    status: null, // 状态 0:禁用 1:启用
+    updateUser: null, // 修改人
+    updateTime: null, // 修改时间
+    createUser: null, // 创建人
+    createTime: null, // 创建时间
+  })
+  await onLoad();
 }
 
 async function onUpdateStatus(employee, status: number) {
@@ -147,14 +184,16 @@ async function onDelete(options: any) {
 async function onLoad() {
   try {
     isLoading.value = true;
-    const {data: {data}} = await employeePageApi({
+    let params = {
       page: pagination.currentPage,
-      pageSize: pagination.pageSize
-    });
+      pageSize: pagination.pageSize,
+    };
+    Object.assign(params, formData);
+    const {data: {data}} = await employeePageApi(params);
     pagination.total = data.total;
     tableData = reactive(data.records);
   } catch (err) {
-
+    console.log(err)
   } finally {
     isLoading.value = false;
   }
@@ -191,8 +230,14 @@ async function onAddEmployeeSubmit(formData) {
   }
 }
 
-async function onQueryFormSubmit() {
+async function onQueryFormSubmit(options) {
+  console.log(options)
+  Object.assign(formData, options);
+  await onLoad();
+}
 
+async function onQueryFormRestForm(options) {
+  Object.assign(formData, options);
 }
 
 onMounted(() => {

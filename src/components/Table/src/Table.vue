@@ -9,7 +9,7 @@
           <Import/>
           <Export/>
           <Print/>
-          <Refresh/>
+          <Refresh @refresh="onRefresh"/>
           <FullScreen/>
           <Setting/>
         </NSpace>
@@ -36,7 +36,6 @@
         <template #default="scope" v-if="type === 'checkbox'">
           <NCheckbox></NCheckbox>
         </template>
-
       </VxeColumn>
     </VxeTable>
     <NPagination
@@ -59,10 +58,14 @@ import {Card} from '/@/components/Card';
 import type {IProps} from './types/props';
 import {basicProps} from './props';
 
-defineEmits(['update:pagination', 'update:tableData']);
+const emits = defineEmits(['update:pagination', 'update:tableData', 'refresh']);
 
 withDefaults(defineProps<IProps>(), basicProps);
 
+
+function onRefresh(){
+  emits('refresh');
+}
 </script>
 
 <style scoped>

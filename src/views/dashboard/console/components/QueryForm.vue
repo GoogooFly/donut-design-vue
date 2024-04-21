@@ -7,7 +7,7 @@
         :label-width="80"
         :model="formData"
     >
-      <NGrid x-gap="12" :cols="5">
+      <NGrid x-gap="12" :cols="6">
         <NGi>
           <NFormItem label="姓名" path="name">
             <NInput v-model:value="formData.name" placeholder="请输入姓名"/>
@@ -30,7 +30,7 @@
         </NGi>
         <NGi>
           <NFormItem label="身份证号" path="idNumber">
-            <NInput v-model:value="formData.phone" placeholder="请输入身份证号"/>
+            <NInput v-model:value="formData.idNumber" placeholder="请输入身份证号"/>
           </NFormItem>
         </NGi>
         <NGi>
@@ -43,9 +43,10 @@
             <NInput v-model:value="formData.updateUser" placeholder="请输入修改人"/>
           </NFormItem>
         </NGi>
-        <NGi>
+        <NGi span="2">
           <NFormItem label="修改时间" path="updateTime">
-            <NDatePicker class="w-full" v-model:value="formData.updateTime" placeholder="请选择修改时间" type="datetime" clearable/>
+            <NDatePicker class="w-full" v-model:value="formData.updateTime" placeholder="请选择修改时间"
+                         type="datetimerange" clearable value-format='yyyy-MM-dd HH:mm:ss'/>
           </NFormItem>
         </NGi>
         <NGi>
@@ -53,9 +54,10 @@
             <NInput v-model:value="formData.createUser" placeholder="请输入创建人"/>
           </NFormItem>
         </NGi>
-        <NGi>
+        <NGi span="2">
           <NFormItem label="创建时间" path="createTime">
-            <NDatePicker class="w-full" v-model:value="formData.createTime" type="datetime" placeholder="请选择创建时间" clearable/>
+            <NDatePicker class="w-full" v-model:value="formData.createTime" type="datetimerange"
+                         placeholder="请选择创建时间" clearable value-format='yyyy-MM-dd HH:mm:ss'/>
           </NFormItem>
         </NGi>
         <NGi suffix>
@@ -76,18 +78,18 @@ import {NButton, NFlex, NForm, NFormItem, NGi, NGrid, NInput, NSelect, NDatePick
 import {Card} from "/@/components/Card";
 import {reactive} from "vue";
 
-const emits = defineEmits(['submit']);
+const emits = defineEmits(['submit', 'restForm']);
 
 let formData = reactive({
-  name: '', // 姓名
-  username: '', // 账号
-  phone: '', // 手机号
-  idNumber: '', // 身份证
-  sex: undefined, // 性别
-  status: undefined, // 状态 0:禁用 1:启用
-  updateUser: '', // 修改人
+  name: null, // 姓名
+  username: null, // 账号
+  phone: null, // 手机号
+  idNumber: null, // 身份证
+  sex: null, // 性别
+  status: null, // 状态 0:禁用 1:启用
+  updateUser: null, // 修改人
   updateTime: null, // 修改时间
-  createUser: '', // 创建人
+  createUser: null, // 创建人
   createTime: null, // 创建时间
 });
 
@@ -97,17 +99,18 @@ function onSearch() {
 
 function onRestForm() {
   Object.assign(formData, {
-    name: '', // 姓名
-    username: '', // 账号
-    phone: '', // 手机号
-    idNumber: '', // 身份证
-    sex: undefined, // 性别
-    status: undefined, // 状态 0:禁用 1:启用
-    updateUser: '', // 修改人
+    name: null, // 姓名
+    username: null, // 账号
+    phone: null, // 手机号
+    idNumber: null, // 身份证
+    sex: null, // 性别
+    status: null, // 状态 0:禁用 1:启用
+    updateUser: null, // 修改人
     updateTime: null, // 修改时间
-    createUser: '', // 创建人
+    createUser: null, // 创建人
     createTime: null, // 创建时间
   })
+  emits('restForm', formData);
 }
 </script>
 

@@ -18,6 +18,7 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "echarts": "^5.4.2",
+    "js-web-screen-shot": "1.9.9-rc.18",
     "lodash-es": "^4.17.21",
     "mockjs": "^1.1.0",
     "pinia": "^2.0.36",
