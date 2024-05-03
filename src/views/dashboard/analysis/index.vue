@@ -15,7 +15,7 @@
 import {NButton, NCarousel, NImage} from 'naive-ui';
 import ScreenShort from 'js-web-screen-shot';
 import {ref} from 'vue';
-import {positionInfoType} from "js-web-screen-shot/dist/lib/type/ComponentType";
+// import {positionInfoType} from "js-web-screen-shot/dist/lib/type/ComponentType";
 import {commonUploadApi} from '/@/api/employee';
 
 interface imgType {
@@ -44,7 +44,7 @@ function onScreenshot() {
 
 interface imgInfoType {
   base64: string;
-  cutInfo: positionInfoType;
+  cutInfo: any;
 }
 
 async function callback(imgInfo: imgInfoType) {
