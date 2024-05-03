@@ -28,6 +28,7 @@ import { storeToRefs } from 'pinia';
 
 const { getAppTheme } = storeToRefs(useAppStore());
 
+
 const getTheme = computed<GlobalTheme>(() => {
   if (unref(getAppTheme) === ThemeEnum.LIGHT) return lightTheme;
   else return darkTheme;

@@ -4,14 +4,15 @@
     <NFormItem class="enter-x">
       <NInput size="large" placeholder="账号" clearable v-model:value="formState.username">
         <template #prefix>
-          <NIcon :component="User" :size="18" color="#c2c2c2" theme="outline" />
+          <NIcon :component="User" :size="18" color="#c2c2c2"/>
         </template>
       </NInput>
     </NFormItem>
     <NFormItem class="enter-x">
-      <NInput size="large" type="password" placeholder="密码" clearable show-password-on="mousedown" v-model:value="formState.password">
+      <NInput size="large" type="password" placeholder="密码" clearable show-password-on="mousedown"
+              v-model:value="formState.password">
         <template #prefix>
-          <NIcon :component="Lock" :size="18" color="#c2c2c2" theme="outline" />
+          <NIcon :component="Lock" :size="18" color="#c2c2c2"/>
         </template>
       </NInput>
     </NFormItem>
@@ -24,7 +25,8 @@
       <NCol :span="12">
         <NFormItem>
           <div class="w-full flex items-center justify-end">
-            <NButton size="small" type="primary" text @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">忘记密码？</NButton>
+            <NButton size="small" type="primary" text @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">忘记密码？
+            </NButton>
           </div>
         </NFormItem>
       </NCol>
@@ -37,10 +39,10 @@
         <NButton size="small" @click="setLoginState(LoginStateEnum.MOBILE)" block>手机登录</NButton>
       </NCol>
       <NCol :span="8">
-        <NButton size="small"  @click="setLoginState(LoginStateEnum.QR_CODE)" block>二维码登录</NButton>
+        <NButton size="small" @click="setLoginState(LoginStateEnum.QR_CODE)" block>二维码登录</NButton>
       </NCol>
       <NCol :span="8">
-        <NButton size="small"  @click="setLoginState(LoginStateEnum.REGISTER)" block>注册</NButton>
+        <NButton size="small" @click="setLoginState(LoginStateEnum.REGISTER)" block>注册</NButton>
       </NCol>
     </NRow>
     <NDivider class="text-[#00000073] text-12px enter-x">其它登录方式</NDivider>
@@ -73,11 +75,29 @@
 <script setup lang="ts">
 import {computed, unref, reactive, ref} from 'vue';
 import LoginFormTitle from "/@/views/sys/login/LoginFormTitle.vue";
-import {NButton, NCheckbox, NCol, NDivider, NForm, NFormItem, NInput, NRow, NSpace, NIcon} from 'naive-ui';
+import {
+  NButton,
+  NCheckbox,
+  NCol,
+  NDivider,
+  NForm,
+  NFormItem,
+  NInput,
+  NRow,
+  NSpace,
+  NIcon,
+  useNotification
+} from 'naive-ui';
 import {Bytedance, Github, Gitlab, Lock, Tiktok, User} from '@icon-park/vue-next';
 import {LoginStateEnum, useLoginState} from '/@/views/sys/login/useLogin';
-import axios from 'axios';
+import {employeeLogin} from '/@/api/employee';
+import {useUserStore} from '/@/store/modules/user';
+import {useRouter} from 'vue-router';
+import {PageEnum} from '/@/enums/pageEnum';
 
+const userStore = useUserStore();
+const router = useRouter();
+const createNotification = useNotification();
 const {getLoginState, setLoginState} = useLoginState();
 const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
 const loading = ref(false);
@@ -88,13 +108,26 @@ const formState = reactive({
   remember: true,
 })
 
-async function onSubmit(){
+async function onSubmit() {
   try {
     loading.value = true;
-    const res = await axios.post('/api/login', {username: 'admin', password: 123456});
-  }catch(err: any){
-
-  }finally {
+    let params = {
+      username: formState.username,
+      password: formState.password
+    }
+    const data = await employeeLogin(params);
+    userStore.setToken(data.token);
+    userStore.setUserInfo(data.userInfo);
+    createNotification.success({
+      title: "登录成功",
+      content: `欢迎回来：${data.userInfo.name}`,
+      duration: 3000,
+      keepAliveOnHover: true
+    })
+    await router.replace(PageEnum.BASE_HOME);
+  } catch (err: any) {
+    console.log(err);
+  } finally {
     loading.value = false;
   }
 }

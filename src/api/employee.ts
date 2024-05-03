@@ -1,7 +1,20 @@
-// import { defHttp } from '/@/utils/http';
+import { defHttp } from '/@/utils/http';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import type { EmployeeLoginDTO } from '/@/types/request/dto/employee';
+import type { EmployeeLoginVO } from '/@/types/request/vo/employee';
 import type {EmployeeQueryParams} from '/@/types/request/employee';
+
+/**
+ * 员工登录接口
+ * @param data
+ */
+export function employeeLogin(data: EmployeeLoginDTO): Promise<EmployeeLoginVO> {
+    return defHttp.post<EmployeeLoginVO>({
+        url: "/employee/login",
+        data
+    })
+}
 
 export async function employeePageApi(params: EmployeeQueryParams) {
     const {createTime, updateTime} = params;

@@ -16,7 +16,7 @@ Object.keys(modules).forEach((key) => {
 export const RootRoute: RouteRecordRaw = {
     path: "/",
     name: "Root",
-    redirect: PageEnum.BASE_HOME,
+    redirect: PageEnum.BASE_ROOT,
     meta: {
         title: "Root",
         hidden: true,

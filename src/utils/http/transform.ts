@@ -1,38 +1,50 @@
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
-import type { RequestOptions, Result } from '/#/axios';
+import type {AxiosTransform} from '/@/types/http/transform';
+import type {AxiosResponse} from "axios";
+import type {Result} from "/@/types/http/axios";
+import {ResultEnum} from "/@/enums/resultEnum.ts";
+import {useMessage} from '/@/hooks/web/useMessage';
+import {isString} from "lodash-es";
+import {useUserStore} from '/@/store/modules/user';
 
-export interface CreateAxiosOptions extends AxiosRequestConfig {
-    authenticationScheme?: string;
-    transform?: AxiosTransform;
-    requestOptions?: RequestOptions;
-}
+const userStore = useUserStore();
+// const createMessage = useMessage();
 
-export abstract class AxiosTransform {
-    /**
-     * @description:
-     */
-    requestCatchHook?: (e: Error, options: RequestOptions) => Promise<any>;
+/**
+ *  网络请求转换器
+ */
+export const transform: AxiosTransform = {
+    // 响应结果转换器
+    transformResponseHook(res: AxiosResponse<Result>) {
+        const {data} = res;
 
-    /**
-     * @description: 请求之前的拦截器
-     */
-    requestInterceptors?: (
-        config: AxiosRequestConfig,
-        options: CreateAxiosOptions,
-    ) => AxiosRequestConfig;
+        if (!data) {
+            throw new Error("请求出错，请重试！");
+        }
 
-    /**
-     * @description: 请求之后的拦截器
-     */
-    responseInterceptors?: (res: AxiosResponse<any>) => AxiosResponse<any>;
+        const {message, data: result, code} = data;
 
-    /**
-     * @description: 请求之前的拦截器错误处理
-     */
-    requestInterceptorsCatch?: (error: Error) => void;
+        // 判断是否成功
+        const hasSuccess = data && Reflect.has(data, 'code') && code === ResultEnum.SUCCESS;
+        if (hasSuccess) {
+            return result;
+        }
 
-    /**
-     * @description: 请求之后的拦截器错误处理
-     */
-    responseInterceptorsCatch?: (error: Error) => void;
-}
+        if (message && isString(message)) {
+            useMessage.error(message);
+        }
+
+        throw new Error("请求出错，请重试！");
+    },
+    // 请求拦截器
+    requestInterceptors(config, options) {
+        const token = userStore.getToken;
+        if (token && options.requestOptions?.withToken) {
+            if (options.authenticationScheme) {
+                config.headers!.Authorization = `${options.authenticationScheme} ${token}`;
+            } else {
+                config.headers!.Authorization = `Bearer ${token}`;
+            }
+        }
+        return config;
+    }
+};

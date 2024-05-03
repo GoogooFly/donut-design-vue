@@ -4,7 +4,7 @@
     <NFormItem name="mobile" class="enter-x">
       <NInput size="large" placeholder="手机号码" clearable>
         <template #prefix>
-          <NIcon :component="Iphone" :size="18" color="#c2c2c2" theme="outline" />
+          <NIcon :component="Iphone" :size="18" color="#c2c2c2"/>
         </template>
       </NInput>
     </NFormItem>
@@ -13,24 +13,26 @@
         <NCol :span="16">
           <NInput size="large" placeholder="验证码" clearable>
             <template #prefix>
-              <NIcon :component="Mail" :size="18" color="#c2c2c2" theme="outline" />
+              <NIcon :component="Mail" :size="18" color="#c2c2c2"/>
             </template>
           </NInput>
         </NCol>
-        <NCol :span="8"><NButton size="large" block>获取验证码</NButton></NCol>
+        <NCol :span="8">
+          <NButton size="large" block>获取验证码</NButton>
+        </NCol>
       </NRow>
     </NFormItem>
     <NFormItem name="password" class="enter-x">
       <NInput size="large" type="password" clearable show-password-on="mousedown">
         <template #prefix>
-          <NIcon :component="Lock" :size="18" color="#c2c2c2" theme="outline" />
+          <NIcon :component="Lock" :size="18" color="#c2c2c2"/>
         </template>
       </NInput>
     </NFormItem>
     <NFormItem name="confirmPassword" class="enter-x">
       <NInput size="large" type="password" clearable show-password-on="mousedown">
         <template #prefix>
-          <NIcon :component="Lock" :size="18" color="#c2c2c2" theme="outline" />
+          <NIcon :component="Lock" :size="18" color="#c2c2c2"/>
         </template>
       </NInput>
     </NFormItem>
