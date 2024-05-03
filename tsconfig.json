@@ -25,12 +25,8 @@
     "paths": {
       "/@/*": ["src/*"],
       "/#/*": ["types/*"]
-<<<<<<< HEAD
     },
     "allowSyntheticDefaultImports": true
-=======
-    }
->>>>>>> 1f638a71499224955d6a09248846e37c4f837d60
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]

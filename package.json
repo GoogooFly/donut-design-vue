@@ -18,20 +18,13 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "echarts": "^5.4.2",
-<<<<<<< HEAD
     "js-web-screen-shot": "1.9.9-rc.18",
-=======
->>>>>>> 1f638a71499224955d6a09248846e37c4f837d60
     "lodash-es": "^4.17.21",
     "mockjs": "^1.1.0",
     "pinia": "^2.0.36",
     "pinia-plugin-persistedstate": "^3.1.0",
     "vfonts": "^0.0.3",
-<<<<<<< HEAD
     "vue": "^3.4.21",
-=======
-    "vue": "^3.2.47",
->>>>>>> 1f638a71499224955d6a09248846e37c4f837d60
     "vue-echarts": "^6.5.5",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.2.0",
@@ -39,20 +32,6 @@
     "xe-utils": "^3.5.7"
   },
   "devDependencies": {
-<<<<<<< HEAD
-=======
-    "@antv/x6": "^2.11.1",
-    "@antv/x6-plugin-clipboard": "^2.1.6",
-    "@antv/x6-plugin-dnd": "^2.0.5",
-    "@antv/x6-plugin-export": "^2.1.6",
-    "@antv/x6-plugin-history": "^2.2.3",
-    "@antv/x6-plugin-keyboard": "^2.2.1",
-    "@antv/x6-plugin-scroller": "^2.0.9",
-    "@antv/x6-plugin-selection": "^2.1.7",
-    "@antv/x6-plugin-snapline": "^2.1.7",
-    "@antv/x6-plugin-transform": "^2.1.7",
-    "@antv/x6-vue-shape": "^2.0.11",
->>>>>>> 1f638a71499224955d6a09248846e37c4f837d60
     "@types/lodash-es": "^4.17.7",
     "@types/mockjs": "^1.0.7",
     "@types/node": "^20.1.7",
@@ -60,11 +39,7 @@
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "husky": "^8.0.3",
     "less": "^4.1.3",
-<<<<<<< HEAD
     "naive-ui": "^2.38.1",
-=======
-    "naive-ui": "^2.34.3",
->>>>>>> 1f638a71499224955d6a09248846e37c4f837d60
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
