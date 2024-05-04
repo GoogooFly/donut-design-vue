@@ -16,6 +16,8 @@ export interface RequestOptions {
 }
 
 export interface UploadFileParams {
+    name?: string;
+    filename?: string;
     file: File | Blob;
     [key: string]: any;
 }

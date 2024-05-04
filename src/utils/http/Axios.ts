@@ -34,12 +34,18 @@ export class DAxios {
     }
 
     /**
-     * 单文件上传
+     * 文件上传
      */
     public uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams): Promise<AxiosResponse<T>> {
         // 创建 FormData
         const formData = new FormData();
+        const customFilename = params.name || "file";
 
+        if (params.filename) {
+            formData.append(customFilename, params.file, params.filename);
+        } else {
+            formData.append(customFilename, params.file);
+        }
         return this.instance.request<T>({
             ...config,
             headers: {
