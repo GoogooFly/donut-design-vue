@@ -2,7 +2,7 @@ import type {AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequ
 import axios from "axios";
 import type {CreateAxiosOptions, AxiosTransform} from '/@/types/http/transform';
 import type {Result, RequestOptions, UploadFileParams} from '/@/types/http/axios';
-import {RequestMethodEnum} from '/@/enums/httpEnum';
+import {ContentTypeEnum, RequestMethodEnum} from '/@/enums/httpEnum';
 import {cloneDeep, isFunction} from 'lodash-es';
 
 export class DAxios {
@@ -17,24 +17,37 @@ export class DAxios {
         this.setupInterceptors();
     }
 
-    post<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    public post<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         return this.request<T>({...config, method: RequestMethodEnum.POST}, options);
     }
 
-    get<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    public get<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         return this.request<T>({...config, method: RequestMethodEnum.GET}, options);
     }
 
-    delete<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    public delete<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         return this.request<T>({...config, method: RequestMethodEnum.DELETE}, options);
     }
 
-    put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+    public put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         return this.request<T>({...config, method: RequestMethodEnum.PUT}, options);
     }
 
-    uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams){
+    /**
+     * 单文件上传
+     */
+    public uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams): Promise<AxiosResponse<T>> {
+        // 创建 FormData
+        const formData = new FormData();
 
+        return this.instance.request<T>({
+            ...config,
+            headers: {
+                'Content-Type': ContentTypeEnum.FORM_DATA
+            },
+            method: RequestMethodEnum.POST,
+            data: formData
+        })
     }
 
     /**
