@@ -1,11 +1,14 @@
 import type {AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import axios from "axios";
 import type {CreateAxiosOptions, AxiosTransform} from '/@/types/http/transform';
-import type {Result, RequestOptions} from '/@/types/http/axios';
+import type {Result, RequestOptions, UploadFileParams} from '/@/types/http/axios';
+import {RequestMethodEnum} from '/@/enums/httpEnum';
 import {cloneDeep, isFunction} from 'lodash-es';
 
 export class DAxios {
+    // 请求实例
     private instance: AxiosInstance;
+    // 初始化总配置
     private readonly options: CreateAxiosOptions;
 
     constructor(options: CreateAxiosOptions) {
@@ -15,19 +18,23 @@ export class DAxios {
     }
 
     post<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
-        return this.request<T>({...config, method: "POST"}, options);
+        return this.request<T>({...config, method: RequestMethodEnum.POST}, options);
     }
 
     get<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
-        return this.request<T>({...config, method: "GET"}, options);
+        return this.request<T>({...config, method: RequestMethodEnum.GET}, options);
     }
 
     delete<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
-        return this.request<T>({...config, method: "DELETE"}, options);
+        return this.request<T>({...config, method: RequestMethodEnum.DELETE}, options);
     }
 
     put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
-        return this.request<T>({...config, method: "PUT"}, options);
+        return this.request<T>({...config, method: RequestMethodEnum.PUT}, options);
+    }
+
+    uploadFile<T = any>(config: AxiosRequestConfig, params: UploadFileParams){
+
     }
 
     /**
@@ -72,6 +79,7 @@ export class DAxios {
         }
     }
 
+    // 获取转换器
     private getTransform(): AxiosTransform | undefined {
         const {transform} = this.options;
 
@@ -79,6 +87,7 @@ export class DAxios {
     }
 
     private request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
+        // 深克隆避免因引用关系而出现的异常
         let conf: CreateAxiosOptions = cloneDeep(config);
         const {requestOptions} = this.options;
         // 合并接口单独配置

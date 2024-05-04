@@ -14,3 +14,8 @@ export interface RequestOptions {
     successMessageMode?: SuccessMessageMode,
     withToken?: boolean,
 }
+
+export interface UploadFileParams {
+    file: File | Blob;
+    [key: string]: any;
+}

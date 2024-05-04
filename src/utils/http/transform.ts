@@ -1,13 +1,12 @@
 import type {AxiosTransform} from '/@/types/http/transform';
 import type {AxiosResponse} from "axios";
 import type {Result} from "/@/types/http/axios";
-import {ResultEnum} from "/@/enums/resultEnum.ts";
+import {ResultEnum} from "/@/enums/httpEnum";
 import {useMessage} from '/@/hooks/web/useMessage';
 import {isString} from "lodash-es";
 import {useUserStore} from '/@/store/modules/user';
 
 const userStore = useUserStore();
-// const createMessage = useMessage();
 
 /**
  *  网络请求转换器
@@ -37,7 +36,7 @@ export const transform: AxiosTransform = {
     },
     // 请求拦截器
     requestInterceptors(config, options) {
-        const token = userStore.getToken;
+        const token = userStore!.getToken;
         if (token && options.requestOptions?.withToken) {
             if (options.authenticationScheme) {
                 config.headers!.Authorization = `${options.authenticationScheme} ${token}`;

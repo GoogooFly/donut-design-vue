@@ -189,7 +189,7 @@ async function onLoad() {
       pageSize: pagination.pageSize,
     };
     Object.assign(params, formData);
-    const {data: {data}} = await employeePageApi(params);
+    const data = await employeePageApi(params);
     pagination.total = data.total;
     tableData = reactive(data.records);
   } catch (err) {

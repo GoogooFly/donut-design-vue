@@ -1,12 +1,13 @@
 import {DAxios} from './Axios';
 import { transform } from '/@/utils/http/transform';
 import { requestOptions } from '/@/utils/http/requestOptions';
+import {ContentTypeEnum} from "/@/enums/httpEnum.ts";
 
 function createAxios() {
     return new DAxios({
-        baseURL: "http://localhost:8080/admin",
+        baseURL: import.meta.env.VITE_BAST_URL,
         timeout: 10 * 1000,
-        headers: {'Content-Type': 'application/json;charset=UTF-8'},
+        headers: {'Content-Type': ContentTypeEnum.JSON},
         transform,
         requestOptions,
     })
