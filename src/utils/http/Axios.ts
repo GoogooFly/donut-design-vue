@@ -1,4 +1,4 @@
-import type {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
+import type {AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import axios from "axios";
 import type {CreateAxiosOptions, AxiosTransform} from '/@/types/http/transform';
 import type {Result, RequestOptions} from '/@/types/http/axios';
@@ -35,7 +35,41 @@ export class DAxios {
      * @private
      */
     private setupInterceptors() {
+        const {instance, options: {transform}} = this;
+        if (!transform) return;
 
+        const {
+            requestInterceptors,
+            responseInterceptors,
+            requestInterceptorsCatch,
+            responseInterceptorsCatch
+        } = transform;
+
+        // 配置请求拦截器
+        instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+            if (requestInterceptors && isFunction(requestInterceptors)) {
+                config = requestInterceptors(config, this.options);
+            }
+            return config;
+        }, undefined);
+
+        // 配置请求拦截器异常
+        if (requestInterceptorsCatch && isFunction(requestInterceptorsCatch)) {
+            instance.interceptors.request.use(undefined, requestInterceptorsCatch);
+        }
+
+        // 配置响应拦截器
+        instance.interceptors.response.use((res: AxiosResponse<any>) => {
+            if (responseInterceptors && isFunction(responseInterceptors)) {
+                res = responseInterceptors(res);
+            }
+            return res;
+        }, undefined);
+
+        // 配置响应拦截器异常
+        if (responseInterceptorsCatch && isFunction(responseInterceptorsCatch)) {
+            instance.interceptors.response.use(undefined, responseInterceptorsCatch);
+        }
     }
 
     private getTransform(): AxiosTransform | undefined {
@@ -47,11 +81,12 @@ export class DAxios {
     private request<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         let conf: CreateAxiosOptions = cloneDeep(config);
         const {requestOptions} = this.options;
+        // 合并接口单独配置
         const opt: RequestOptions = Object.assign({}, requestOptions, options);
         const transform = this.getTransform();
 
         conf.requestOptions = opt;
-        const {transformResponseHook} = transform || {};
+        const {transformResponseHook, requestCatchHook} = transform || {};
 
         return new Promise((resolve, reject) => {
             this.instance.request<any, AxiosResponse<Result>>(conf)
@@ -59,7 +94,7 @@ export class DAxios {
                     // 封装响应结果 // 判断是否有拦截器并且是函数
                     if (transformResponseHook && isFunction(transformResponseHook)) {
                         try {
-                            const ret = transformResponseHook(res);
+                            const ret = transformResponseHook(res, opt);
                             resolve(ret);
                         } catch (err) {
                             reject(err);
@@ -69,6 +104,10 @@ export class DAxios {
                     resolve(res as unknown as Promise<T>);
                 })
                 .catch((err) => {
+                    // 配置错误处理
+                    if (requestCatchHook && isFunction(requestCatchHook)) {
+                        reject(requestCatchHook(err, opt));
+                    }
                     reject(err);
                 })
         })
