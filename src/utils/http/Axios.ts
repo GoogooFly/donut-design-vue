@@ -32,7 +32,6 @@ export class DAxios {
     public put<T = any>(config: AxiosRequestConfig, options?: RequestOptions): Promise<T> {
         return this.request<T>({...config, method: RequestMethodEnum.PUT}, options);
     }
-
     /**
      * 文件上传
      */

@@ -1,5 +1,4 @@
 import {defHttp} from '/@/utils/http';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import type {EmployeeLoginDTO} from '/@/types/request/dto/employee';
 import type {EmployeeLoginVO} from '/@/types/request/vo/employee';
@@ -67,16 +66,17 @@ export async function employeeUpdateApi(data: any) {
 }
 
 export async function commonUploadApi(data: any) {
-    // return defHttp.post({
-    //     url:"/admin/common/upload",
+    // return defHttp.uploadFile({
+    //     url:"/admin/common/upload"
+    // }, {
+    //     data
+    // });
+    // return axios({
+    //     method: "POST",
+    //     headers: {
+    //         'Content-Type': 'multipart/form-data'
+    //     },
+    //     url: 'http://localhost:8080/admin/common/upload',
     //     data
     // })
-    return axios({
-        method: "POST",
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        },
-        url: 'http://localhost:8080/admin/common/upload',
-        data
-    })
 }

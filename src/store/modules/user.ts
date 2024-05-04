@@ -42,8 +42,12 @@ export const useUserStore = defineStore({
             this.token = '';
             this.lastUpdateTime = "";
         },
-        login() {
+        async login(token: string, userInfo: IUserState['userInfo']) {
+            this.setToken(token);
+            this.setUserInfo(userInfo);
+            // 分配权限操作
 
+            return userInfo!;
         },
         logout() {
 

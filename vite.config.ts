@@ -27,15 +27,7 @@ export default ({command, mode}: ConfigEnv): UserConfig => {
                 {
                     find: /\/#\//,
                     replacement: pathResolve('types') + '/',
-                },
-                {
-                    find: '@antv/x6',
-                    replacement: '@antv/x6/lib',
-                },
-                {
-                    find: '@antv/x6-vue-shape',
-                    replacement: '@antv/x6-vue-shape/lib',
-                },
+                }
             ],
         },
         plugins: createVitePlugins(isBuild),

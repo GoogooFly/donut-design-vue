@@ -116,15 +116,15 @@ async function onSubmit() {
       password: formState.password
     }
     const data = await employeeLogin(params);
-    userStore.setToken(data.token);
-    userStore.setUserInfo(data.userInfo);
+    const userInfo = userStore.login(data.token, data.userInfo);
+    await router.replace(PageEnum.BASE_HOME);
     createNotification.success({
       title: "登录成功",
-      content: `欢迎回来：${data.userInfo.name}`,
+      content: `欢迎回来：${userInfo.name}`,
       duration: 3000,
       keepAliveOnHover: true
     })
-    await router.replace(PageEnum.BASE_HOME);
+
   } catch (err: any) {
     console.log(err);
   } finally {
