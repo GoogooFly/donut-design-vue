@@ -15,7 +15,7 @@
         </NSpace>
       </NFlex>
     </NFlex>
-    <VxeTable :border="border" :stripe="stripe" :data="tableData" :loading="loading">
+    <VxeTable :border="border" :stripe="stripe" :data="datasource" :loading="loading">
       <VxeColumn
           v-for="({ title, field, slots, type, width, align, showOverflow, fixed }, index) in columns"
           :key="index"
@@ -52,18 +52,18 @@
 
 <script setup lang="ts" name="BasicTable">
 import {VxeTable, VxeColumn} from 'vxe-table';
-import {NButton, NFlex, NPagination, NSpace, NCheckbox} from 'naive-ui';
+import {NFlex, NPagination, NSpace, NCheckbox} from 'naive-ui';
 import {Import, Export, Print, Refresh, FullScreen, Setting} from './components';
 import {Card} from '/@/components/Card';
-import type {IProps} from './types/props';
-import {basicProps} from './props';
+import {basicTableProps} from './props';
+import type {BasicTableProps} from './types/table';
 
 const emits = defineEmits(['update:pagination', 'update:tableData', 'refresh']);
 
-withDefaults(defineProps<IProps>(), basicProps);
+withDefaults(defineProps<BasicTableProps>(), basicTableProps);
 
 
-function onRefresh(){
+function onRefresh() {
   emits('refresh');
 }
 </script>
