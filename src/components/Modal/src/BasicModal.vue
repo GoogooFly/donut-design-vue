@@ -42,7 +42,7 @@
   </NModal>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="BasicModal">
 import {NModal, NCard, NButton, NTooltip, NFlex} from 'naive-ui';
 import {Download, Close, FullScreenOne} from "@icon-park/vue-next";
 

@@ -17,7 +17,7 @@
   </NConfigProvider>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="App">
 import {computed, unref} from 'vue';
 import type {GlobalTheme} from 'naive-ui';
 import {dateZhCN, NConfigProvider, NDialogProvider, NMessageProvider, NNotificationProvider, zhCN, NLoadingBarProvider, darkTheme, lightTheme} from 'naive-ui';

@@ -50,7 +50,7 @@
   </Card>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="BasicTable">
 import {VxeTable, VxeColumn} from 'vxe-table';
 import {NButton, NFlex, NPagination, NSpace, NCheckbox} from 'naive-ui';
 import {Import, Export, Print, Refresh, FullScreen, Setting} from './components';

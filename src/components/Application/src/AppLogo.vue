@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="AppLogo">
 import {NImage, NSpace} from 'naive-ui';
 import AppLogo from "/@/assets/images/logo.png";
 

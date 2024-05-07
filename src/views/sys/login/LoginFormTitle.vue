@@ -4,7 +4,7 @@
   </h2>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="LoginFormTitle">
 import { computed, unref } from 'vue';
 import { useLoginState, LoginStateEnum } from '/@/views/sys/login/useLogin';
 

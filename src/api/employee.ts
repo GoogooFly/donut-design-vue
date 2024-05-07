@@ -71,12 +71,4 @@ export async function commonUploadApi(data: any) {
     // }, {
     //     data
     // });
-    // return axios({
-    //     method: "POST",
-    //     headers: {
-    //         'Content-Type': 'multipart/form-data'
-    //     },
-    //     url: 'http://localhost:8080/admin/common/upload',
-    //     data
-    // })
 }

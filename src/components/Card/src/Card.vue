@@ -4,7 +4,7 @@
   </NCard>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Card">
 import { NCard } from 'naive-ui';
 
 </script>

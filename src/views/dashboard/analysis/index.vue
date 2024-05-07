@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Analysis">
 import {NButton, NCarousel, NImage} from 'naive-ui';
 import ScreenShort from 'js-web-screen-shot';
 import {ref} from 'vue';

@@ -72,7 +72,7 @@
   </NForm>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="LoginForm">
 import {computed, unref, reactive, ref} from 'vue';
 import LoginFormTitle from "/@/views/sys/login/LoginFormTitle.vue";
 import {

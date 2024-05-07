@@ -74,7 +74,7 @@
   </NFlex>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Console">
 import {NFlex, NButton, NTag, NPopconfirm, NDropdown} from 'naive-ui';
 import {Plus, Edit, Delete, MoreFour} from '@icon-park/vue-next';
 import {BasicTable} from '/@/components/Table';

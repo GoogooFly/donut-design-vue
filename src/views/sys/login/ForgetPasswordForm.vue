@@ -42,7 +42,7 @@
   </NForm>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="ForgetPasswordForm">
 import {computed, unref} from 'vue';
 import LoginFormTitle from "/@/views/sys/login/LoginFormTitle.vue";
 import {NButton, NForm, NFormItem, NInput, NRow, NCol, NIcon} from 'naive-ui';

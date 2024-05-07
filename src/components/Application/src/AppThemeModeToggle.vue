@@ -9,7 +9,7 @@
   </NSwitch>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="AppThemeModeToggle">
 import {Moon, Sun} from '@icon-park/vue-next';
 import {NSwitch} from 'naive-ui';
 import {ref} from 'vue';

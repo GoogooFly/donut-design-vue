@@ -50,7 +50,7 @@
   </NForm>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="RegisterForm">
 import {computed, unref} from 'vue';
 import LoginFormTitle from "/@/views/sys/login/LoginFormTitle.vue";
 import { NForm, NFormItem, NButton, NCheckbox, NInput, NRow, NCol, NSpace, NIcon } from 'naive-ui';

@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="Login">
 import { NSpace } from 'naive-ui';
 import {AppThemeModeToggle, AppLogo, AppLocalePicker} from '/@/components/Application';
 import LoginForm from "/@/views/sys/login/LoginForm.vue";

@@ -1,4 +1,4 @@
-import BasicModal from './src/Modal.vue';
+import BasicModal from './src/BasicModal.vue';
 
 export {
     BasicModal

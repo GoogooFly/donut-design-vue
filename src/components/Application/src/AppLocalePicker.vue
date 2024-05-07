@@ -6,7 +6,7 @@
   </NPopselect>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="AppLocalePicker">
 import { Translate } from '@icon-park/vue-next';
 import { NPopselect  } from 'naive-ui';
 import { reactive } from 'vue';
